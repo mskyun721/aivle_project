@@ -1,0 +1,56 @@
+<script src="https://unpkg.com/vue@next"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+<script>
+    let model_id;
+    let total;
+    let collect;
+    let percent;
+    let version;
+    
+
+    const model_precsion = {
+        delimiters: ['[[', ']]'],
+
+        data() {
+            return {
+                model_predict: [],
+            }
+        },
+
+        computed: {
+        },
+
+        created() {
+            console.log("fetchModel created()...");
+            const params = new URL(location).searchParams;
+            this.fetchModel();
+        },
+
+        methods: {
+            fetchModel(page=1) {
+                console.log("fetchModel()...");
+                let getUrl = `/api/chart_all`;
+
+                axios.get(getUrl)
+                    .then(res => {
+                        console.log("FETCH POSTLIST GET RES", res);
+                        this.model_predict = res.data.model_predict;
+                        model_id = res.data.model_id;
+                        total = res.data.total;
+                        collect = res.data.collect;
+                        percent = res.data.percent;
+                        version = res.data.version;
+                    })
+                    .catch(err => {
+                        console.log("FETCH POSTLIST GET ERR.RESPONSE", err.response);
+                        alert(`${err.response.status} ${err.response.statusText}`);
+                    });
+            },
+            
+            
+        },
+    }
+
+    Vue.createApp(model_precsion).mount('#page-top')
+</script>

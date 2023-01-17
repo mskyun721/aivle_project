@@ -1,0 +1,21 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'language/style.css' %}">
+
+<form action="index2" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <fieldset>
+        <legend><h1>파일 업로드</h1></legend>
+        <input name="files" type="file" multiple>
+       
+    </fieldset>
+    <div>정답 : <input name="answer" type="text"></div>
+    <div><input type="submit" value="업로드"></div>
+</form>
+
+
+{% for result in result.all%}
+    <p><img src="{{ result.image.url }}" width="500" height="500"></p>
+    <p>{{result.answer}}</p>
+    <p>{{result.pub_date}}</p>
+    <br>
+{%endfor%}

@@ -1,0 +1,57 @@
+{% extends "admin/change_list.html" %}
+{% load static %}
+
+<!-- Override extrahead to add Chart.js -->
+{% block extrahead %}
+{{ block.super }}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const ctx = document.getElementById('myChart').getContext('2d');
+        
+        let chart_data = {{chart_data | safe}};
+        let labels_ = chart_data['model']
+        let data_ = chart_data['percent']
+        
+        // Parse the dates to JS
+        // Render the chart
+        const chart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels_,
+                datasets: [
+                {
+                    label: '정확도',
+                    data: data_,
+                    backgroundColor: 'rgba(220,20,20,0.5)',
+                },
+                ],
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    yAxes: [
+                        {
+                        ticks: {
+                            beginAtZero: true,
+                            min:0,
+                            max:100,
+                        },
+                        },
+                    ],
+                },
+            },
+        });
+    });
+</script>
+{% endblock %}
+
+{% block content %}
+<!-- Render our chart -->
+<div style="width: 80%;">
+  <canvas style="margin-bottom: 30px; width: 60%; height: 50%;" id="myChart"></canvas>
+</div>
+<!-- Render the rest of the ChangeList view -->
+{{ block.super }}
+{% endblock %}

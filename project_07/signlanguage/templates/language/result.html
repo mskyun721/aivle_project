@@ -1,0 +1,57 @@
+{% extends 'layout.html' %}
+
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'language/style.css' %}">
+
+{% comment %} {% for r in result%}
+  <div>
+      <img src="{{ r.image.url }}" width="100" height="100">
+  </div>
+  <div>
+    예측 결과 : {{ r.result }}
+  </div>
+  <div>
+    정답  : {{ r.answer }}
+  </div>
+  <div>
+    {% if r.result == r.answer %}
+          <h2>정답</h2>
+    {% else %}
+      <h2>오답</h2>
+    {% endif %} 
+    
+{% endfor %}{% endcomment %}
+
+<!-- Service Start -->
+<div class="container-xxl py-5">
+  <div class="container">
+      <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
+          <h6 class="text-primary">수어 예측 결과</h6>
+          <h1 class="mb-4">Sing Language</h1>
+      </div>
+      <div class="row g-4">
+        {% for r in result%}
+          <div class="col-md-6 col-lg-4 wow fadeInUp" data-wow-delay="0.1s">
+              <div class="service-item rounded overflow-hidden">
+                <img src="{{ r.image.url }}" width="100" height="100">
+                  <div class="position-relative p-4 pt-0">
+                      
+                      <h4 class="mb-3">예측 결과 : {{ r.result }}</h4>
+                      <h4 class="mb-3">정답  : {{ r.answer }}</h4>
+                      <h4 class="mb-3">{% if r.result == r.answer %}
+                                              정답
+                                        {% else %}
+                                          오답
+                                        {% endif %}</h4>
+                  </div>
+              </div>
+          </div>
+          {% endfor %}
+      </div>
+  </div>
+</div>
+<!-- Service End -->
+  </div>
+{% endblock %}

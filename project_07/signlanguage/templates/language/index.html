@@ -1,0 +1,51 @@
+{% extends 'layout.html' %}
+
+{%load static%}
+
+{% block content %}
+<script type = 'text/javascript'>
+    let _counter = 0;
+    const copy_html = `
+                    <fieldset>
+                        <legend><h1>파일 업로드</h1></legend>
+                        <input name="files" type="file">
+                    
+                    </fieldset>
+                    <div>정답 : <input name="answer" type="text" ></div>
+                    </div>
+                    <div id="placeholder" style="display:block;">
+                    </div>
+                    `
+
+    function Add() {
+        _counter++;
+        let oClone = document.getElementById("template").cloneNode(false);
+        oClone.id += (_counter + "");
+
+        oClone.innerHTML = copy_html
+        
+        document.getElementById("placeholder").appendChild(oClone);
+    }
+</script>
+
+
+<div class = 'filebox' style="text-align: center; max-width:500px; margin:4rem auto">
+    <form action="upload" method="post" enctype="multipart/form-data" >
+        {% csrf_token %}
+        <div id="template" style="display:block;">
+            <fieldset>
+                <legend><h1>파일 업로드</h1></legend>
+                <input name="files" type="file"> 
+            </fieldset>
+            <div>정답 : <input name="answer" type="text" ></div>
+        </div>
+        <div id="placeholder" style="display:block;">
+        </div>
+        <div><input type="button" value="추가" onclick="Add();"></div>
+        <div><input type="submit" value="업로드"></div>        
+    </form>
+</div>
+
+
+
+{% endblock %}

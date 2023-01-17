@@ -1,0 +1,96 @@
+ <div id="page-top">
+    
+</div>
+
+
+<div style="width: 900px; height: 900px;">
+	<!--차트가 그려질 부분-->
+	<canvas id="myChart"></canvas>
+</div>
+
+ {% include 'include/chart_all.html' %}
+ <script src="https://www.gstatic.com/charts/loader.js"></script>
+ <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+{% comment %} 
+<script src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+	
+    google.charts.load('current', {'packages':['bar']});
+    google.charts.setOnLoadCallback(drawChart);
+    let data = [['version', '정확도']]
+    for (i=0; i < version.length; i++){
+        data.push([version[i], percent[i]])
+    }
+    console.log(data)
+    function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+            ['version', '정확도'],
+            ['2014', 1000],
+            ['2015', 1170],
+            ['2016', 660],
+            ['2017', 1030]
+        ]);
+     
+        var options = {
+            chart: {
+            title: '모델 성능',
+            }
+        };
+     
+        var chart = new google.charts.Bar(document.getElementById('columnchart_material'));
+     
+        chart.draw(data, google.charts.Bar.convertOptions(options));
+    }
+</script> 
+<div id="columnchart_material" style="width: 800px; height: 500px;"></div> 
+{% endcomment %}
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+{% comment %} <div style="width: 900px; height: 900px;" id="page-top">
+	<!--차트가 그려질 부분-->
+    <canvas id="myChart"></canvas>
+</div> {% endcomment %}
+
+
+<script type="text/javascript">
+    let versoin_ = "{{version}}";
+    console.log(versoin_);
+    const context = document.getElementById('myChart').getContext('2d');
+    
+    let myChart = new Chart(context, {
+        type: 'bar', // 차트의 형태
+        data: { // 차트에 들어갈 데이터
+            //labels: ['test', '강사 model'],
+            labels: version,
+            datasets: [
+                { //데이터
+                    label: '모델 정확도 ', //차트 제목
+                    fill: false, // line 형태일 때, 선 안쪽을 채우는지 안채우는지
+                    //data: [50, 75],
+                    data: percent,
+                    borderWidth: 1 //경계선 굵기
+                }
+            ]
+        },
+        /*
+        options: {
+            scales: {
+                y: [
+                    {
+                        ticks: {
+                            beginAtZero: true
+                            min:0,
+                            max:100,
+                            stepSize : 10,
+                        }
+                    }
+                ]
+            }
+        }
+        */
+    });
+</script>
+{% comment %} <div :class="chartCreate"> </div> {% endcomment %}
